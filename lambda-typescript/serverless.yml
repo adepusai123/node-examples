@@ -1,0 +1,77 @@
+service: mongodb-lambda
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  environment:
+    MONGODB_URI: ${MONGODB_URI} # use the environment variable
+
+functions:
+  insertUser:
+    handler: dist/handlers/index.createHandler
+    events:
+      - http:
+        path: user
+        method: post
+        cors: true
+  getUser:
+    handler: dist/handlers/index.getHandler
+    events:
+      - http:
+          path: user/{id}
+          method: get
+          cors: true
+  
+  updateUser:
+    handler: dist/handlers/index.updateHandler
+    events:
+      - http:
+          path: user/{id}
+          method: put
+          cors: true
+  
+  deleteUser:
+    handler: dist/handlers/index.deleteHandler
+    events:
+      - http:
+          path: user/{id}
+          method: delete
+          cors: true
+
+plugins:
+  - serverless-dotenv-plugin # Automatically load environment variables from .env file
+
+resources:
+  Resources:
+    LambdaExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:  # Corrected from 'properties' to 'Properties'
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: sts:AssumeRole
+              Principal:
+                Service: lambda.amazonaws.com
+        Policies:
+          - PolicyName: "MongoDBAccessPolicy"
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                    - "secretsmanager:GetSecretValue"
+                  Resource: 
+                    - "arn:aws:logs:*:*:*"
+                    - "arn:aws:secretsmanager:*:*:secret:*"
+
+  Outputs:
+    CloudWatchLogGroup:
+      Description: "CloudWatch Log Group"
+      Value: !Ref AWS::Logs::LogGroup
+    

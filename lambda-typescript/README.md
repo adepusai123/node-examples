@@ -8,3 +8,14 @@
     Run the following command to initialize the ``tsconfig.json`` file:
     `` npx tsc --init ``
     this command will create the ``tsconfig.json`` file.
+3. Install MongoDB and dotenv Type Definitions (Ensure Compatibilty)
+    ``npm i --save @types/mongodb @types/dotenv``
+
+4. Serverless configuration
+    create serverless.yml with required configuration
+
+5. Build and Deploy project
+    `` npx tsc ``
+
+    `` serverless deploy ``
+

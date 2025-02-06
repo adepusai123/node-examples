@@ -1,5 +1,5 @@
 const Product = require('../models/productModel');
-const { ValidateProduct } = require('../validators/productValidator');
+const { ValidateProduct }  = require('../../../shared/validation');
 
 const createProduct = async (req, res) => {
     const { name, description, price, stock } = req.body;

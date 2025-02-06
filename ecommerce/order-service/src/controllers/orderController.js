@@ -1,6 +1,6 @@
 const Order = require('../models/orderModel');
 const axios = require('axios');
-const { validateOrder }  = require('../../shared/validation');
+const { validateOrder }  = require('../../../shared/validation');
 
 const createOrder = async (req, res) => {
     const { productId, quantity } = req.body;

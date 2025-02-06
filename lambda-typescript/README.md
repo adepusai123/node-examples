@@ -13,7 +13,8 @@
 
 4. Serverless configuration
     create serverless.yml with required configuration
-
+    ``serverless plugin install -n serverless-dotenv-plugin``
+    
 5. Build and Deploy project
     `` npx tsc ``
 

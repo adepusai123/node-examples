@@ -41,8 +41,7 @@ functions:
           cors: true
 
 plugins:
-  - serverless-dotenv-plugin # Automatically load environment variables from .env file
-
+  - serverless-dotenv-plugin
 resources:
   Resources:
     LambdaExecutionRole:

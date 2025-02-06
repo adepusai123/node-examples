@@ -23,4 +23,14 @@
     `` serverless deploy ``
     this command: Packages your lambda function code. Creates an API Gateway endpoint( for HTTP Request).
     Deploy the lambda function and any other necessary aws resources.
+10. **Set up CI/CD Pipeline**
+    1. setup Github 
+    2. Set up Github secrets : **Repo -> Settings -> Secrets**. Add following secrets.
+        * ``AWS_ACCESS_KEY_ID``
+        * ``AWS_SECRET_ACCESS_KEY``
+        * ``MONGO_URI`` (MongoDB URI)
+        * ``DB_NAME``
+    3. Create GitHub Actions Workflow:
+        create ``.github/workflows/deploy.yml`` file in repository to automate the deployment process.
+    
 

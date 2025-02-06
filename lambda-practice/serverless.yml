@@ -5,12 +5,17 @@ provider:
   runtime: nodejs18.x
   stage: dev
   region: us-east-1
+  environment:
+    MONGODB_URI: ${env:MONGODB_URI} # use the environment variable
 
 functions:
   insertUser:
-    handler: index.handler
-    environment:
-      MONGODB_URI: ${env:MONGODB_URI} # use the environment variable
+    handler: index.insertHandler
+    events:
+      - http:
+        path: user
+        method: post
+        cors: true
 
 plugins:
   - serverless-dotenv-plugin # Automatically load environment variables from .env file
@@ -33,11 +38,16 @@ resources:
               Version: '2012-10-17'
               Statement:
                 - Effect: "Allow"
-                   Action:
+                  Action:
                     - "logs:CreateLogGroup"
                     - "logs:CreateLogStream"
                     - "logs:PutLogEvents"
                     - "secretsmanager:GetSecretValue"
-                    Resource: 
+                  Resource: 
                     - "arn:aws:logs:*:*:*"
                     - "arn:aws:secretsmanager:*:*:secret:*"
+
+  Outputs:
+    CloudWatchLogGroup:
+      Description: "CloudWatch Log Group"
+      Value: !Ref AWS::Logs::LogGroup

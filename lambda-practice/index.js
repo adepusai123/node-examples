@@ -12,7 +12,7 @@ async function  connectDB() {
     return client.db(dbName);  // Use the database name
 }
 
-exports.handler = async (event) => {
+exports.insertHandler = async (event) => {
     const db = await connectDB();
     const collection = db.collection('users');
     // const users = await collection.find({}).toArray();

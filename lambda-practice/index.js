@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config(); // load environment variables from .env file
 
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = process.env.MONGODB_URI;
 const dbName = process.env.DB_NAME;
 
 async function  connectDB() {

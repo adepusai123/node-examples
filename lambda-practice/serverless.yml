@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: us-east-1
   environment:
-    MONGODB_URI: ${env:MONGODB_URI} # use the environment variable
+    MONGODB_URI: ${MONGODB_URI} # use the environment variable
 
 functions:
   insertUser:
@@ -24,7 +24,7 @@ resources:
   Resources:
     LambdaExecutionRole:
       Type: AWS::IAM::Role
-      properties:
+      Properties:  # Corrected from 'properties' to 'Properties'
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -51,3 +51,4 @@ resources:
     CloudWatchLogGroup:
       Description: "CloudWatch Log Group"
       Value: !Ref AWS::Logs::LogGroup
+    

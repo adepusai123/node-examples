@@ -1,0 +1,43 @@
+service: mongodb-lambda
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  insertUser:
+    handler: index.handler
+    environment:
+      MONGODB_URI: ${env:MONGODB_URI} # use the environment variable
+
+plugins:
+  - serverless-dotenv-plugin # Automatically load environment variables from .env file
+
+resources:
+  Resources:
+    LambdaExecutionRole:
+      Type: AWS::IAM::Role
+      properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: sts:AssumeRole
+              Principal:
+                Service: lambda.amazonaws.com
+        Policies:
+          - PolicyName: "MongoDBAccessPolicy"
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: "Allow"
+                   Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                    - "secretsmanager:GetSecretValue"
+                    Resource: 
+                    - "arn:aws:logs:*:*:*"
+                    - "arn:aws:secretsmanager:*:*:secret:*"

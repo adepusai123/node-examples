@@ -1,0 +1,21 @@
+{
+  "name": "lambda-practice",
+  "version": "1.0.0",
+  "description": "**Dependencies** 1. node 2. aws cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "mongodb": "^6.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "serverless": "^3.40.0",
+    "serverless-dotenv-plugin": "^6.0.0"
+  }
+}

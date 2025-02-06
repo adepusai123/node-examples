@@ -1,0 +1,28 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+# Build and push the Docker image to Docker registry
+build:
+  stage: build
+  script:
+    - docker build -t product-service:latest ./product-service
+    - docker build -t order-service:latest ./order-service
+    - docker tag product-service:latest $CI_REGISTRY/product-service:$CI_COMMIT_REF_NAME
+    - docker tag order-service:latest $CI_REGISTRY/order-service:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY/product-service:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY/order-service:$CI_COMMIT_REF_NAME
+
+# deploy the Docker image to Kubernetes
+deploy:
+  stage: deploy
+  script:
+    - kubectl apply -f kubernates/product-service-deployment.yaml
+    - kubectl apply -f kubernates/order-service-deployment.yaml
+    - kubectl rollout restart deployment/product-service
+    - kubectl rollout restart deployment/order-service
+    

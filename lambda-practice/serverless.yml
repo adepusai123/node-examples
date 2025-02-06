@@ -16,6 +16,29 @@ functions:
         path: user
         method: post
         cors: true
+  getUser:
+    handler: index.getHandler
+    events:
+      - http:
+          path: user/{id}
+          method: get
+          cors: true
+  
+  updateUser:
+    handler: index.updateHandler
+    events:
+      - http:
+          path: user/{id}
+          method: put
+          cors: true
+  
+  deleteUser:
+    handler: index.deleteHandler
+    events:
+      - http:
+          path: user/{id}
+          method: delete
+          cors: true
 
 plugins:
   - serverless-dotenv-plugin # Automatically load environment variables from .env file
